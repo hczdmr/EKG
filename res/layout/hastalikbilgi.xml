@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d3d3d3" >
+
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/ekg">
+
+        <Spinner
+
+                android:id="@+id/spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/btn1"
+                android:gravity="center"
+                android:layout_alignParentTop="true" android:layout_alignParentLeft="true"/>
+        <ImageView android:layout_width="match_parent"
+                   android:layout_height="220dp"
+                   android:id="@+id/resim"
+                   android:layout_below="@+id/spinner1" android:layout_alignParentLeft="true"/>
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="400dp"
+                  android:id="@+id/aciklama"
+                  android:gravity="center_horizontal"
+                  android:textSize="20dp"
+                  android:textColor="#166cec"
+                  android:textStyle="bold"
+                  android:layout_below="@+id/resim" android:layout_alignParentLeft="true"/>
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

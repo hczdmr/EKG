@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d3d3d3" >
+
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/ekg">
+
+        <Button
+                android:id="@+id/bilgi"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/btn1"
+                android:gravity="center_horizontal"
+                android:onClick="btnClick"
+                android:text="Hastalık Bilgisi Alın"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true" android:layout_alignParentLeft="true"/>
+
+
+        <Spinner
+
+                android:id="@+id/spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/btn1"
+                android:gravity="center"
+                android:layout_below="@+id/bilgi" android:layout_alignParentLeft="true"/>
+
+        <Button
+                android:id="@+id/btnyukle"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/btn1"
+                android:gravity="center_horizontal"
+                android:onClick="btnClick"
+                android:text="Filtrelenmiş Veri Yükle"
+                android:textStyle="bold"
+                android:layout_below="@+id/spinner1" android:layout_alignParentLeft="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
