@@ -1,6 +1,7 @@
 package com.haci.EKG;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -12,7 +13,7 @@ public class HastalikBilgi extends Activity {
     Spinner spin;
     ImageView image;
     TextView aciklama;
-    private static String[] spinnerValues = new String[]{"Sinüs Taşikardisi","Sağ Dal Bloğu (RBBB)", "Atriyal Fibrilasyon", "Sol Anterior Fasiküler Blok (LAFB)"};
+    private static String[] spinnerValues = new String[]{"Weka Nedir?","Sinüs Taşikardisi","Sağ Dal Bloğu (RBBB)", "Atriyal Fibrilasyon", "Sol Anterior Fasiküler Blok (LAFB)"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public class HastalikBilgi extends Activity {
 
         image=(ImageView) findViewById(R.id.resim);
         aciklama=(TextView) findViewById(R.id.aciklama);
+        aciklama.setTextColor(Color.WHITE);
         spin=(Spinner) findViewById(R.id.spinner1);
         ArrayAdapter<String> arrayadapter=new ArrayAdapter<String>(this,R.layout.spinner,spinnerValues);
         arrayadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -28,7 +30,17 @@ public class HastalikBilgi extends Activity {
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position==1){
+                if(position==0){
+                    image.setImageResource(R.drawable.weka);
+                    aciklama.setText(
+                                    "\t\tWEKA , Yeni Zelanda Waikato Üniversitesi’nde geliştirilen bir veri madenciliği\n" +
+                                    "\t\tve makine öğrenmesi yazılımı olup  Java programlama dili ile geliştirilmiştir.\n" +
+                                    "\t\tWEKA,  birçok sınıflandırma tekniğini içermektedir.  \n" +
+                                    "\t\tWEKA’da, Preprocess (önisleme), Classify (sınıflama), Cluster (kümeleme), Associate (birliktelik kuralları),\n" +
+                                    "\t\t Select Attribute (nitelik seçme) ve Visualize (görsellestirme) işlemleri gerçekleştirilebilir.");
+
+                }
+                else if(position==2){
                     image.setImageResource(R.drawable.sagdalblogu);
                     aciklama.setText(
                             "\t•\tSağ dal bloğunda, depolarizasyon, septum üzerinden, sol ventrikülden sağa doğru yayıldığı için sağ ventrikülün aktivasyonu gecikir.\n" +
@@ -37,7 +49,7 @@ public class HastalikBilgi extends Activity {
                             "\t•\tSağ ventrikülün gecikmiş aktivasyonu ayrıca sağ prekordiyal derivasyonlarda ST depresyonu ve T dalga inversiyonu ile birlikte ikincil repolarizasyon anormalliklerine de yol açar.\n" +
                             "\t•\tİzole sağ dal bloğunda sol ventriküler aktivasyon sol dal demeti üzerinden ilerlerdiğinden, kardiyak aks değişmez.");
 
-                }else if (position==0){
+                }else if (position==1){
                     image.setImageResource(R.drawable.sinustasikardisi);
                     aciklama.setText(
                             "SEBEPLER:                                                                                  \n" +
@@ -52,7 +64,7 @@ public class HastalikBilgi extends Activity {
                             "Yeterli ağrı tedavisi\n" +
                             "Ateş kontrolü vs.\n" +
                             "\uF076 MI’a eşlik eden uygunsuz taşikardide ß bloker");
-                }else if(position==2){
+                }else if(position==3){
                     image.setImageResource(R.drawable.atrialfibrilasyon);
                     aciklama.setText(
                             "\t•\tDüzensiz ritim.\n" +
@@ -63,7 +75,7 @@ public class HastalikBilgi extends Activity {
                             "\t•\tFibrilasyon dalgaları ufak (amplitüd <0.5 mm) ya da iri (amplitüd > 0.5 mm) olabilir.\n" +
                             "\t•\tFibrilasyon dalgaları P dalgaları gibi görünüp yanlış tanıya neden olabilir.");
                 }
-                else if(position==3){
+                else if(position==4){
                     image.setImageResource(R.drawable.solanterierfasikuler);
                     aciklama.setText(
                             "\t•\tSol anterior fasiküler blokta (sol anterior hemiblok olarak da bilinir) impulslar, sol ventriküle sol ventrikülün endokardiyal yüzeyi boyunca inferoseptal duvarına eklenen sol posterior fasikül ile iletilir.\n" +

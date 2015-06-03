@@ -6,7 +6,7 @@
         android:fillViewport="true">
     <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:background="@drawable/ekg">
+            android:layout_height="wrap_content" android:background="@drawable/ekg1">
 
         <!-- Login Form -->
         <LinearLayout

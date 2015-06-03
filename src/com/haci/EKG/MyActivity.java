@@ -1,13 +1,12 @@
 package com.haci.EKG;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.LineChart;
@@ -17,14 +16,24 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+import weka.classifiers.Evaluation;
+import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.rules.DecisionTable;
+import weka.classifiers.trees.J48;
+import weka.core.Instances;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MyActivity extends Activity {
+
+    Spinner spinner;
+    String FILENAME;
+    private static String[] kategoriler = new String[] { "Weka Sınıflandırma", "Naive Bayes", "J48", "Decision Table"    };
 
     private GraphicalView gv;
     private GraphicalView gv2;
@@ -75,7 +84,6 @@ public class MyActivity extends Activity {
     TextView rr;
     TextView samplesayisi;
 
-    Button knnsinif;
     Button RRsinif;
 
     private ArrayList<Float> rrIntervalSaniye;
@@ -153,6 +161,271 @@ public class MyActivity extends Activity {
         Bundle bundle=getIntent().getExtras();
         position=bundle.getInt("position");
         int spinnerPos=bundle.getInt("spinnerPos");
+
+        spinner=(Spinner)findViewById(R.id.spinner2);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                R.layout.spinner, kategoriler);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                if(arg2 == 0) {
+
+                }else if(arg2 == 1) {
+
+                    try {
+                        if(position == 0) {
+                            //dosya adımızı belirliyoruz
+                            FILENAME = "iris.arff";
+                        }else if(position == 1) {
+                            FILENAME = "labor.arff";
+                        }else if(position == 2) {
+                            FILENAME = "anneal.arff";
+                        }else if(position == 3) {
+                            FILENAME = "diabetes.arff";
+                        }else if(position == 4) {
+                            FILENAME = "segmentchallenge.arff";
+                        }else if(position == 5) {
+                            FILENAME = "segmenttest.arff";
+                        }else if(position == 6) {
+                            FILENAME = "soybean.arff";
+                        }else if(position == 7) {
+                            FILENAME = "ionosphere.arff";
+                        }else if(position == 8) {
+                            FILENAME = "creditg.arff";
+                        }else if(position == 9) {
+                            FILENAME = "vote.arff";
+                        }else if(position == 10) {
+                            FILENAME = "labor.arff";
+                        }else if(position == 11) {
+                            FILENAME = "creditg.arff";
+                        }else {
+                            FILENAME = "iris.arff";
+                        }
+
+                        //dosya yazıcımızı tanımlıyoruz.
+                        InputStream inputstream = null;
+
+                        inputstream= getResources().getAssets().open(FILENAME);
+                        //inputstream = openFileInput(FILENAME);
+                        InputStreamReader isr = new InputStreamReader(inputstream);
+                        BufferedReader reader = new BufferedReader(isr);
+                        //
+
+                        //dosyadan satır satır okuyoruz
+                        String yazici = reader.readLine();
+                        //textview 'e aktarıyoruz.
+
+
+                        Instances train = new Instances(reader);
+                        train.setClassIndex(train.numAttributes() - 1);
+
+                        reader.close();
+
+                        NaiveBayes nb = new NaiveBayes();
+                        nb.buildClassifier(train);
+                        Evaluation eval = new Evaluation(train);
+                        eval.crossValidateModel(nb, train, 10, new Random(1));
+
+                        AlertDialog alertDialog = new AlertDialog.Builder(
+                                MyActivity.this).create();
+
+                        // Setting Dialog Title
+                        alertDialog.setTitle("Siniflandirma Sonuclari");
+
+                        // Setting Dialog Message
+                        alertDialog.setMessage("Fmeasure: " + Double.toString(eval.fMeasure(1)) + "\n" + "Recall: " + Double.toString(eval.recall(1)) + "\n" + "Precision: " + Double.toString(eval.precision(1)) + "\n" + "Accuracy: " + Double.toString(eval.pctCorrect()));
+
+                        // Setting Icon to Dialog
+                        alertDialog.setIcon(R.drawable.tick);
+
+                        // Setting OK Button
+                        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Write your code here to execute after dialog closed
+                                //Toast.makeText(getApplicationContext(), "You clicked on OK", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        // Showing Alert Message
+                        alertDialog.show();
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }else if(arg2 == 2) {
+
+                    try {
+                        if(position == 0) {
+                            //dosya adımızı belirliyoruz
+                            FILENAME = "iris.arff";
+                        }else if(position == 1) {
+                            FILENAME = "labor.arff";
+                        }else if(position == 2) {
+                            FILENAME = "anneal.arff";
+                        }else if(position == 3) {
+                            FILENAME = "diabetes.arff";
+                        }else if(position == 4) {
+                            FILENAME = "segmentchallenge.arff";
+                        }else if(position == 5) {
+                            FILENAME = "segmenttest.arff";
+                        }else if(position == 6) {
+                            FILENAME = "soybean.arff";
+                        }else if(position == 7) {
+                            FILENAME = "ionosphere.arff";
+                        }else if(position == 8) {
+                            FILENAME = "creditg.arff";
+                        }else if(position == 9) {
+                            FILENAME = "vote.arff";
+                        }else if(position == 10) {
+                            FILENAME = "labor.arff";
+                        }else if(position == 11) {
+                            FILENAME = "creditg.arff";
+                        }else {
+                            FILENAME = "iris.arff";
+                        }
+
+                        //dosya yazıcımızı tanımlıyoruz.
+                        InputStream inputstream = null;
+
+                        inputstream= getResources().getAssets().open(FILENAME);
+                        //inputstream = openFileInput(FILENAME);
+                        InputStreamReader isr = new InputStreamReader(inputstream);
+                        BufferedReader reader = new BufferedReader(isr);
+                        //
+
+                        //dosyadan satır satır okuyoruz
+                        String yazici = reader.readLine();
+                        //textview 'e aktarıyoruz.
+
+
+                        Instances train = new Instances(reader);
+                        train.setClassIndex(train.numAttributes() - 1);
+
+                        reader.close();
+
+                        J48 j48 = new J48();
+                        j48.buildClassifier(train);
+                        Evaluation eval = new Evaluation(train);
+                        eval.crossValidateModel(j48, train, 10, new Random(1));
+
+                        AlertDialog alertDialog = new AlertDialog.Builder(
+                                MyActivity.this).create();
+
+                        // Setting Dialog Title
+                        alertDialog.setTitle("Sınıflandırma Sonuçları");
+
+                        // Setting Dialog Message
+                        alertDialog.setMessage("Fmeasure: "+Double.toString(eval.fMeasure(1)) + "\n" + "Recall: "+Double.toString(eval.recall(1)) + "\n" + "Precision: "+Double.toString(eval.precision(1)) + "\n" + "Accuracy: "+Double.toString(eval.pctCorrect()));
+
+                        // Setting Icon to Dialog
+                        alertDialog.setIcon(R.drawable.tick);
+
+                        // Setting OK Button
+                        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Write your code here to execute after dialog closed
+                                //Toast.makeText(getApplicationContext(), "You clicked on OK", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        // Showing Alert Message
+                        alertDialog.show();
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }else if(arg2 == 3) {
+
+                    try {
+                        if(position == 0) {
+                            //dosya adımızı belirliyoruz
+                            FILENAME = "iris.arff";
+                        }else if(position == 1) {
+                            FILENAME = "labor.arff";
+                        }else if(position == 2) {
+                            FILENAME = "anneal.arff";
+                        }else if(position == 3) {
+                            FILENAME = "diabetes.arff";
+                        }else if(position == 4) {
+                            FILENAME = "segmentchallenge.arff";
+                        }else if(position == 5) {
+                            FILENAME = "segmenttest.arff";
+                        }else if(position == 6) {
+                            FILENAME = "soybean.arff";
+                        }else if(position == 7) {
+                            FILENAME = "ionosphere.arff";
+                        }else if(position == 8) {
+                            FILENAME = "creditg.arff";
+                        }else if(position == 9) {
+                            FILENAME = "vote.arff";
+                        }else if(position == 10) {
+                            FILENAME = "labor.arff";
+                        }else if(position == 11) {
+                            FILENAME = "creditg.arff";
+                        }else {
+                            FILENAME = "iris.arff";
+                        }
+
+                        //dosya yazıcımızı tanımlıyoruz.
+                        InputStream inputstream = null;
+
+                        inputstream= getResources().getAssets().open(FILENAME);
+                        //inputstream = openFileInput(FILENAME);
+                        InputStreamReader isr = new InputStreamReader(inputstream);
+                        BufferedReader reader = new BufferedReader(isr);
+                        //
+
+                        //dosyadan satır satır okuyoruz
+                        String yazici = reader.readLine();
+                        //textview 'e aktarıyoruz.
+
+
+                        Instances train = new Instances(reader);
+                        train.setClassIndex(train.numAttributes() - 1);
+
+                        reader.close();
+
+                        DecisionTable dt = new DecisionTable();
+                        dt.buildClassifier(train);
+                        Evaluation eval = new Evaluation(train);
+                        eval.crossValidateModel(dt, train, 10, new Random(1));
+
+                        AlertDialog alertDialog = new AlertDialog.Builder(
+                                MyActivity.this).create();
+
+                        // Setting Dialog Title
+                        alertDialog.setTitle("Siniflandirma Sonuclari");
+
+                        // Setting Dialog Message
+                        alertDialog.setMessage("Fmeasure: "+Double.toString(eval.fMeasure(1)) + "\n" + "Recall: "+Double.toString(eval.recall(1)) + "\n" + "Precision: "+Double.toString(eval.precision(1)) + "\n" + "Accuracy: "+Double.toString(eval.pctCorrect()));
+
+                        // Setting Icon to Dialog
+                        alertDialog.setIcon(R.drawable.tick);
+
+                        // Setting OK Button
+                        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Write your code here to execute after dialog closed
+                                //Toast.makeText(getApplicationContext(), "You clicked on OK", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        // Showing Alert Message
+                        alertDialog.show();
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
 
         ArrayList<InputStream> arrayinputstream=new ArrayList<InputStream>();
         ArrayList<InputStream> arrayinputstream2=new ArrayList<InputStream>();
@@ -494,6 +767,7 @@ public class MyActivity extends Activity {
         }
 
         hastalikAdiiii = (TextView)findViewById(R.id.hastalikad);
+        hastalikAdiiii.setTextColor(Color.WHITE);
         hastalikAdiiii.setText(diseaseText);
 
 
@@ -507,6 +781,10 @@ public class MyActivity extends Activity {
         heartrate=(TextView) findViewById(R.id.heartrate);
         rr=(TextView) findViewById(R.id.rr);
         samplesayisi=(TextView) findViewById(R.id.samplesayisi);
+        heartbeat.setTextColor(Color.WHITE);
+        heartrate.setTextColor(Color.WHITE);
+        rr.setTextColor(Color.WHITE);
+        samplesayisi.setTextColor(Color.WHITE);
 
         heartbeat.setText("Heart Beats[#]: "+hb);
         heartrate.setText("Heart Rate[bpm]: "+hr);
@@ -520,13 +798,6 @@ public class MyActivity extends Activity {
         // qrsSay=(TextView) findViewById(R.id.qrsSayac);
         //qrsSay.setText(qrsSayisi+" tane QRS Komplexi Bulunmaktadir.");
         chartCizdir();
-        knnsinif=(Button) findViewById(R.id.knn);
-        knnsinif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                 knnSiniflandirma();
-            }
-        });
        // knnSiniflandirma();
     }
 
@@ -558,14 +829,14 @@ public class MyActivity extends Activity {
 
         //ekgSeries nesnesinin cizimini customize et.
         XYSeriesRenderer ekgrenderer = new XYSeriesRenderer();
-        ekgrenderer.setColor(Color.BLUE);
+        ekgrenderer.setColor(Color.RED);
         ekgrenderer.setPointStyle(PointStyle.POINT);
         ekgrenderer.setFillPoints(true);
         ekgrenderer.setLineWidth(2);
         ekgrenderer.setDisplayChartValues(false);
 
         XYSeriesRenderer ekgrenderer2=new XYSeriesRenderer();
-        ekgrenderer2.setColor(Color.BLUE);
+        ekgrenderer2.setColor(Color.RED);
         ekgrenderer2.setPointStyle(PointStyle.POINT);
         ekgrenderer2.setFillPoints(true);
         ekgrenderer2.setLineWidth(2);

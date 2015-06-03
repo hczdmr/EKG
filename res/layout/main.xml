@@ -80,7 +80,7 @@
             android:layout_weight="0.1"
             android:textColor="#166cec"
             />
-    <Button
+  <!--  <Button
             android:id="@+id/knn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -89,7 +89,16 @@
             android:onClick="btnClick"
             android:text="Knn Sınıflandırma"
             android:textStyle="bold"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"/> -->
+    <Spinner
+
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/btn1"
+            android:gravity="center"
+            android:layout_below="@+id/samplesayisi" android:layout_alignParentLeft="true"/>
+
     <Button
             android:id="@+id/RRSiniflandirma"
             android:layout_width="match_parent"
